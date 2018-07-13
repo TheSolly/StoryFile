@@ -24,6 +24,7 @@
   "scripts": {
     "start": "react-native start",
     "clean": "cd android && gradlew clean && cd ..",
+    "server": "adb kill-server && adb start-server",
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "test": "jest"

@@ -4,12 +4,6 @@ To run the project do the following:
 
 1- Run `npm install` or `yarn install`
 
-2- install get-graphql-schema globally
+2- run `react-native run-android` to run the app itself and make sure you have an emulator working.
 
-`npm install -g get-graphql-schema`
-
-3- To update the schema run the following command
-
-`npm run update-schema` or `yarn run update-schema`
-
-4- run `react-native run-android` to run the app itself and make sure you have an emulartor working.
+Tested on: 'Nexus_5X_API_25(AVD) - 7.1.1'
