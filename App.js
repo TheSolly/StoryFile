@@ -1,8 +1,21 @@
-import React from 'react';
-import SplashScreen from './src/containers/SplashScreen/SplashScreen';
+import React, { Component } from 'react';
+import { createStackNavigator } from 'react-navigation';
+import { View, StatusBar } from 'react-native';
 
-export default class App extends React.Component {
-  render() {
-    return <SplashScreen />;
-  }
-}
+import SplashScreen from './src/containers/SplashScreen/SplashScreen';
+import MainView from './src/containers/MainView/MainView';
+
+const StackNavigation = createStackNavigator(
+  {
+    SplashScreen: SplashScreen,
+    MainView: MainView,
+  },
+  {
+    initialRouteName: 'MainView',
+    headerMode: 'none',
+  },
+);
+
+// const App = () => <StackNavigation />;
+
+export default StackNavigation;

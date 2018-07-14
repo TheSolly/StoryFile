@@ -1,15 +1,54 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native';
+import {
+  StyleSheet,
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+  PermissionsAndroid,
+  StatusBar,
+} from 'react-native';
 
 class SplashScreen extends Component {
+  componentDidMount() {
+    this.requestMicPermission();
+  }
+
+  async requestMicPermission() {
+    try {
+      const granted = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.RECORD_AUDIO,
+        {
+          title: 'StoryFile App Mic Permission',
+          message: 'StoryFile needs access to your Mic ',
+        },
+      );
+      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+        console.log('You can use the mic');
+        // alert('Mic Permission granted!');
+      } else {
+        console.log('Mic permission denied');
+        alert('Mic permission denied');
+      }
+    } catch (err) {
+      console.warn(err);
+    }
+  }
+
   render() {
     return (
       <View style={styles.container}>
+        <StatusBar barStyle="light-content" backgroundColor="#2C3942" />
         <View style={styles.logo}>
-          <Image source={require('../../Assets/logo.png')} />
+          <Image
+            style={{ resizeMode: 'contain', height: 100 }}
+            source={require('../../Assets/logo.png')}
+          />
         </View>
         <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.button}>
+          <TouchableOpacity
+            onPress={() => this.props.navigation.navigate('MainView')}
+            style={styles.button}>
             <Text style={styles.text}>GET STARTED</Text>
           </TouchableOpacity>
         </View>
