@@ -11,12 +11,16 @@ import axios from 'axios';
 import Video from 'react-native-video';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-class MainView extends Component {
+class AskingState extends Component {
   state = {
     videoURL: null,
-    loading: true,
     waitingImageURL: null,
+    backgroundColor: 'green',
+    title: 'Hold to Talk..',
+    subtitle: 'Start speaking after you hold',
+    iconStatus: 'microphone',
   };
+
   componentDidMount() {
     axios
       .get('https://api-stg.story-file.optima.io/api/v1/admin/users/1', {
@@ -42,10 +46,54 @@ class MainView extends Component {
   stopLoading = () => {
     this.setState({ loading: false });
   };
+  handleRecord = () => {
+    this.setState({
+      backgroundColor: 'red',
+      title: 'Release to ask..',
+      subtitle: 'stop recording when you are ready..',
+    });
+  };
+  handleRelease = () => {
+    this.setState({
+      backgroundColor: 'rgba(52, 52, 52, 0.3)',
+      title: 'loading..',
+      subtitle: 'contemplating your question deeply..',
+    });
+    var postData = {
+      params: {
+        audio: null,
+      },
+    };
+    let axiosConfig = {
+      headers: {
+        Authorization: 'Token APPLICANT_LOVES_STORYFILE',
+      },
+    };
+    axios
+      .post(
+        'https://api-stg.story-file.optima.io/api/v1/admin/audios/1',
+        {
+          params: {
+            audio: null,
+          },
+        },
+        {
+          headers: {
+            Authorization: 'Token APPLICANT_LOVES_STORYFILE',
+          },
+        },
+      )
+      .then(response => {
+        console.log(response);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
 
   render() {
     let loading = null;
-    let waitingVideo = null;
+    let video = null;
     if (!this.state.videoURL) {
       loading = (
         <View style={styles.loadingContainer}>
@@ -54,7 +102,7 @@ class MainView extends Component {
         </View>
       );
     } else {
-      waitingVideo = (
+      video = (
         <Video
           source={{
             uri: this.state.videoURL,
@@ -63,6 +111,7 @@ class MainView extends Component {
           style={styles.backgroundVideo}
           repeat
           onLoad={this.stopLoading}
+          // onBuffer={this.stopLoading}
         />
       );
     }
@@ -70,10 +119,24 @@ class MainView extends Component {
     return (
       <View style={styles.container}>
         <StatusBar hidden />
-        <TouchableOpacity style={styles.bottomBar}>
-          <Icon name="microphone" size={50} color="#fff" />
-          <Text style={styles.title}>Hold to Talk..</Text>
-          <Text style={styles.subtitle}>Start speaking after you hold</Text>
+        {loading}
+        {video}
+        <TouchableOpacity
+          onPressIn={this.handleRecord}
+          onPressOut={this.handleRelease}
+          activeOpacity={0.75}
+          style={[
+            styles.bottomBar,
+            { backgroundColor: this.state.backgroundColor },
+          ]}>
+          <Icon
+            name={this.state.iconStatus}
+            size={50}
+            color="#fff"
+            style={{ paddingHorizontal: 15 }}
+          />
+          <Text style={styles.title}>{this.state.title}</Text>
+          <Text style={styles.subtitle}>{this.state.subtitle}</Text>
         </TouchableOpacity>
       </View>
     );
@@ -85,7 +148,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'flex-end',
-    // backgroundColor: 'black',
+    backgroundColor: '#2C3942',
   },
   loadingContainer: {
     flex: 1,
@@ -97,8 +160,9 @@ const styles = StyleSheet.create({
   },
   bottomBar: {
     alignSelf: 'stretch',
+    alignContent: 'center',
+    justifyContent: 'center',
     height: 75,
-    backgroundColor: '#53C399',
   },
   backgroundVideo: {
     position: 'absolute',
@@ -109,15 +173,16 @@ const styles = StyleSheet.create({
   },
   title: {
     paddingLeft: 64,
-    marginTop: -50,
+    marginTop: -50, // need improvement
     fontSize: 17,
     color: '#fff',
   },
   subtitle: {
     paddingLeft: 64,
-    fontSize: 15,
+    fontSize: 12,
     color: '#fff',
+    fontWeight: '100',
   },
 });
 
-export default MainView;
+export default AskingState;

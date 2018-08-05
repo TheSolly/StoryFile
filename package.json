@@ -22,7 +22,7 @@
     "eslint-config-prettier": "2.9.0"
   },
   "scripts": {
-    "start": "react-native start",
+    "start": "node node_modules/react-native/local-cli/cli.js start",
     "clean": "cd android && gradlew clean && cd ..",
     "server": "adb kill-server && adb start-server",
     "android": "react-native run-android",

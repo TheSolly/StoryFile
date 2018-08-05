@@ -47,7 +47,7 @@ class SplashScreen extends Component {
         </View>
         <View style={styles.buttonContainer}>
           <TouchableOpacity
-            onPress={() => this.props.navigation.navigate('MainView')}
+            onPress={() => this.props.navigation.navigate('AskingState')}
             style={styles.button}>
             <Text style={styles.text}>GET STARTED</Text>
           </TouchableOpacity>

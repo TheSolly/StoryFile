@@ -3,15 +3,15 @@ import { createStackNavigator } from 'react-navigation';
 import { View, StatusBar } from 'react-native';
 
 import SplashScreen from './src/containers/SplashScreen/SplashScreen';
-import MainView from './src/containers/MainView/MainView';
+import AskingState from './src/containers/AskingState/AskingState';
 
 const StackNavigation = createStackNavigator(
   {
     SplashScreen: SplashScreen,
-    MainView: MainView,
+    AskingState: AskingState,
   },
   {
-    initialRouteName: 'MainView',
+    initialRouteName: 'SplashScreen',
     headerMode: 'none',
   },
 );
