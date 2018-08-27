@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
+// import React, { Component } from 'react';
 import { createStackNavigator } from 'react-navigation';
-import { View, StatusBar } from 'react-native';
+// import { View, StatusBar } from 'react-native';
 
-import SplashScreen from './src/containers/SplashScreen/SplashScreen';
-import AskingState from './src/containers/AskingState/AskingState';
+import SplashScreen from '../components/SplashScreen/SplashScreen';
+import AskingState from '../components/AskingState/AskingState';
 
 const StackNavigation = createStackNavigator(
   {
